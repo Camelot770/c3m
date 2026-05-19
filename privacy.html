@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>FASHION AI · Политика конфиденциальности</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg:        #3d3a38;
+  --bg-soft:   #44403d;
+  --bg-deep:   #2a2826;
+  --ink:       #efece6;
+  --ink-mute:  #b3aea7;
+  --ink-faint: #807a73;
+  --accent:    #e8732c;
+  --accent-2:  #c95c1c;
+  --max:       1440px;
+  --pad-x:     clamp(32px, 4vw, 80px);
+  --head-font: "Unbounded", "Inter", system-ui, sans-serif;
+  --body-font: "Inter", "Manrope", system-ui, sans-serif;
+  --mono:      "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body-font);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+
+/* ── nav ──────────────────────────────────────────────────── */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  padding: 18px 0;
+  background: rgba(45,42,40,.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(232,115,44,.25);
+}
+.nav .row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 40px;
+}
+.logo {
+  font-family: var(--head-font);
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: .32em;
+  font-size: 14px;
+}
+.logo .dot {
+  display: inline-block;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin: 0 .55em;
+  transform: translateY(-2px);
+}
+.nav .menu {
+  display: flex;
+  justify-content: center;
+  gap: clamp(14px, 2vw, 32px);
+  flex-wrap: wrap;
+}
+.nav .menu a {
+  font-family: var(--head-font);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s, color .2s;
+  white-space: nowrap;
+}
+.nav .menu a:hover { color: var(--accent); border-color: var(--accent); }
+.nav .cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 18px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--head-font);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  border: 1px solid var(--accent);
+  cursor: pointer;
+  transition: background .2s;
+}
+.nav .cta-btn:hover { background: var(--accent-2); }
+
+/* ── hero ─────────────────────────────────────────────────── */
+.doc-hero {
+  padding-top: clamp(72px, 10vh, 120px);
+  padding-bottom: clamp(40px, 5vh, 60px);
+  border-bottom: 1px solid rgba(232,115,44,.2);
+}
+.doc-hero .crumbs {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .22em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  display: flex; gap: 8px; align-items: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.doc-hero .crumbs a:hover { color: var(--accent); }
+.doc-hero .crumbs .sep { color: var(--accent); opacity: .6; }
+.doc-hero .kicker {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .26em;
+  color: var(--accent);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 16px;
+}
+.doc-hero h1 {
+  margin: 0;
+  font-family: var(--head-font);
+  font-weight: 300;
+  font-size: clamp(28px, 6vw, 88px);
+  line-height: .95;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+.doc-hero .updated {
+  margin-top: 24px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .22em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+/* ── content ──────────────────────────────────────────────── */
+.doc-body {
+  padding-top: clamp(60px, 8vh, 100px);
+  padding-bottom: clamp(80px, 10vh, 140px);
+}
+.doc-body .grid {
+  display: grid;
+  grid-template-columns: minmax(0, 720px);
+  justify-content: center;
+}
+.doc-body article > section {
+  margin-bottom: 56px;
+}
+.doc-body article > section:last-child { margin-bottom: 0; }
+.doc-body h2 {
+  margin: 0 0 20px;
+  font-family: var(--head-font);
+  font-weight: 400;
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.2;
+  letter-spacing: .01em;
+  color: var(--ink);
+}
+.doc-body h2 .num {
+  color: var(--accent);
+  margin-right: 14px;
+  font-family: var(--mono);
+  font-weight: 500;
+  letter-spacing: .1em;
+}
+.doc-body p {
+  margin: 0 0 14px;
+  color: var(--ink-mute);
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+.doc-body p:last-child { margin-bottom: 0; }
+.doc-body p b { color: var(--ink); font-weight: 500; }
+.doc-body ul {
+  margin: 8px 0 14px;
+  padding-left: 18px;
+  color: var(--ink-mute);
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+.doc-body ul li { margin-bottom: 6px; }
+.doc-body ul li::marker { color: var(--accent); }
+.doc-body a.inline-link {
+  color: var(--accent);
+  border-bottom: 1px solid rgba(232,115,44,.4);
+  transition: border-color .2s;
+}
+.doc-body a.inline-link:hover { border-color: var(--accent); }
+
+/* ── footer ───────────────────────────────────────────────── */
+.site-footer {
+  padding: 60px 0 36px;
+  background: var(--bg-deep);
+  border-top: 1px solid rgba(232,115,44,.2);
+}
+.site-footer .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.site-footer .col h4 {
+  margin: 0 0 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .26em;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.site-footer .col p, .site-footer .col a {
+  margin: 5px 0;
+  color: var(--ink);
+  font-size: 15px;
+  display: block;
+}
+.site-footer .col a:hover { color: var(--accent); }
+.site-footer .bar {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(232,115,44,.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+.site-footer .bar a {
+  color: var(--ink-faint);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  transition: color .2s, border-color .2s;
+}
+.site-footer .bar a:hover { color: var(--accent); border-color: var(--accent); }
+.site-footer .bar .links { display: flex; gap: 24px; flex-wrap: wrap; }
+
+/* ── responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .nav .menu { display: none; }
+  .site-footer .grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 720px) {
+  .site-footer .grid { grid-template-columns: 1fr; }
+  .site-footer .bar { justify-content: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════ NAV ════════════ -->
+<header class="nav" id="top">
+  <div class="row wrap">
+    <a href="index.html#top" class="logo">FASHION<span class="dot"></span>AI</a>
+    <nav class="menu">
+      <a href="gallery.html?cat=studio">Студийная съёмка</a>
+      <a href="gallery.html?cat=walks">Проходки</a>
+      <a href="gallery.html?cat=acc">Аксессуары</a>
+      <a href="gallery.html?cat=image">Имиджевые фото</a>
+      <a href="gallery.html?cat=vid">Имиджевые видео</a>
+      <a href="gallery.html?cat=promo">Промо-ролики</a>
+    </nav>
+    <a href="index.html#cta" class="cta-btn">Запросить пилот →</a>
+  </div>
+</header>
+
+<!-- ════════════ HERO ════════════ -->
+<section class="doc-hero wrap">
+  <div class="crumbs">
+    <a href="index.html#top">Главная</a>
+    <span class="sep">/</span>
+    <b>Политика конфиденциальности</b>
+  </div>
+  <span class="kicker">Юридический документ</span>
+  <h1>Политика<br/>конфиденциальности</h1>
+  <div class="updated">Последнее обновление · 19 мая 2026</div>
+</section>
+
+<!-- ════════════ BODY ════════════ -->
+<section class="doc-body wrap">
+  <div class="grid">
+    <article>
+
+      <section>
+        <h2><span class="num">01</span>Общие положения</h2>
+        <p>Настоящая Политика конфиденциальности (далее — «Политика») описывает порядок обработки персональных данных пользователей сервиса FASHION AI (далее — «Сервис»), доступного по адресу сайта владельца.</p>
+        <p>Политика составлена в соответствии с требованиями Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных» и иных нормативно-правовых актов Российской Федерации в области защиты персональных данных.</p>
+        <p>Используя Сервис, отправляя нам заявку или передавая нам любые данные, вы подтверждаете, что ознакомились с настоящей Политикой и согласны с её условиями.</p>
+      </section>
+
+      <section>
+        <h2><span class="num">02</span>Какие данные мы собираем</h2>
+        <p>В рамках работы Сервиса мы можем обрабатывать следующие категории данных:</p>
+        <ul>
+          <li><b>Контактные данные:</b> имя, название компании, адрес электронной почты, номер телефона — при заполнении формы заявки или обращении в поддержку.</li>
+          <li><b>Загружаемые материалы:</b> фотографии товаров и иные изображения, которые вы передаёте для обработки сервисом.</li>
+          <li><b>Технические данные:</b> IP-адрес, тип устройства и браузера, операционная система, источник перехода, действия на сайте — собираются автоматически при посещении сайта.</li>
+          <li><b>Cookies и идентификаторы аналитики:</b> для запоминания настроек, измерения посещаемости и улучшения работы сайта.</li>
+        </ul>
+        <p>Мы не запрашиваем и не обрабатываем специальные категории персональных данных, биометрические данные или данные несовершеннолетних.</p>
+      </section>
+
+      <section>
+        <h2><span class="num">03</span>Цели обработки</h2>
+        <p>Мы обрабатываем данные исключительно для следующих целей:</p>
+        <ul>
+          <li>Связь с вами по вашему запросу (демо, пилот, коммерческое предложение, поддержка).</li>
+          <li>Оказание услуг по генерации каталожных кадров на основе предоставленных вами материалов.</li>
+          <li>Заключение и исполнение договоров, выставление счетов, бухгалтерская отчётность.</li>
+          <li>Улучшение работы Сервиса, веб-аналитика, тестирование и отладка.</li>
+          <li>Исполнение обязанностей, предусмотренных законодательством РФ.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2><span class="num">04</span>Правовые основания</h2>
+        <p>Обработка данных осуществляется на следующих основаниях:</p>
+        <ul>
+          <li>Согласие пользователя, выраженное при отправке формы или передаче материалов.</li>
+          <li>Исполнение договора, стороной которого является пользователь.</li>
+          <li>Законные интересы оператора в части анализа и улучшения работы Сервиса.</li>
+          <li>Требования действующего законодательства Российской Федерации.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2><span class="num">05</span>Хранение и защита</h2>
+        <p>Персональные данные хранятся на защищённых серверах с применением технических и организационных мер, обеспечивающих их безопасность: разграничение доступа, шифрование каналов передачи, регулярные резервные копии, журналирование событий безопасности.</p>
+        <p>Срок хранения данных не превышает времени, необходимого для достижения целей обработки, или сроков, установленных законодательством. Загруженные пользователем материалы и результаты их обработки хранятся не дольше 12 месяцев с момента последнего обращения, если иное не предусмотрено договором.</p>
+      </section>
+
+      <section>
+        <h2><span class="num">06</span>Передача третьим лицам</h2>
+        <p>Мы не продаём и не передаём ваши персональные данные третьим лицам, за исключением случаев, прямо предусмотренных законом или необходимых для оказания услуги:</p>
+        <ul>
+          <li>Подрядчикам и провайдерам инфраструктуры (хостинг, облачные вычисления, CDN, платёжные системы) — в объёме, необходимом для выполнения их функций, на основании соглашений о конфиденциальности.</li>
+          <li>Государственным органам — по основаниям, предусмотренным законодательством РФ.</li>
+        </ul>
+        <p>Все подрядчики связаны обязательствами по защите персональных данных не ниже описанных в настоящей Политике.</p>
+      </section>
+
+      <section>
+        <h2><span class="num">07</span>Cookies и аналитика</h2>
+        <p>Сайт использует cookies и аналогичные технологии для базовой работы, запоминания настроек и сбора обезличенной статистики посещений (Яндекс.Метрика, Google Analytics или иные сервисы).</p>
+        <p>Вы можете отключить cookies в настройках вашего браузера. В этом случае часть функций сайта может работать некорректно.</p>
+      </section>
+
+      <section>
+        <h2><span class="num">08</span>Ваши права</h2>
+        <p>В соответствии с законодательством РФ вы имеете право:</p>
+        <ul>
+          <li>Получить информацию о том, какие ваши данные мы обрабатываем и с какой целью.</li>
+          <li>Потребовать уточнения, блокирования или удаления ваших данных, если они неполны, устарели, неточны, незаконно получены или не являются необходимыми для заявленной цели обработки.</li>
+          <li>Отозвать согласие на обработку персональных данных в любой момент.</li>
+          <li>Обжаловать действия или бездействие оператора в уполномоченный орган по защите прав субъектов персональных данных (Роскомнадзор) или в суд.</li>
+        </ul>
+        <p>Для реализации этих прав направьте запрос на электронную почту, указанную в разделе «Связь с нами».</p>
+      </section>
+
+      <section>
+        <h2><span class="num">09</span>Изменения политики</h2>
+        <p>Мы можем периодически обновлять настоящую Политику. Актуальная версия всегда доступна на этой странице. Дата последнего обновления указана в начале документа.</p>
+        <p>Существенные изменения дополнительно сообщаются пользователям, оставившим контактные данные.</p>
+      </section>
+
+      <section>
+        <h2><span class="num">10</span>Связь с нами</h2>
+        <p>По всем вопросам, связанным с обработкой персональных данных, обращайтесь:</p>
+        <p>
+          <b>Email:</b> <a class="inline-link" href="mailto:hello@fashion.ai">hello@fashion.ai</a><br/>
+          <b>Телефон:</b> +7 495 000 00 00, пн–пт с 10:00 до 20:00 (МСК)
+        </p>
+      </section>
+
+    </article>
+  </div>
+</section>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="grid">
+      <div class="col">
+        <a href="index.html#top" class="logo" style="font-size:13px;">FASHION<span class="dot"></span>AI</a>
+        <p style="margin-top:14px; color:var(--ink-faint); font-size:13px; max-width:260px;">AI-сервис каталожной съёмки для премиум-сегмента и e-commerce.</p>
+      </div>
+      <div class="col">
+        <h4>Email</h4>
+        <a href="mailto:hello@fashion.ai">hello@fashion.ai</a>
+        <a href="mailto:sales@fashion.ai">sales@fashion.ai</a>
+      </div>
+      <div class="col">
+        <h4>Телефон</h4>
+        <p>+7 495 000 00 00</p>
+        <p style="color:var(--ink-faint); font-size:12px;">пн–пт, 10:00 – 20:00 мск</p>
+      </div>
+      <div class="col">
+        <h4>Документы</h4>
+        <a href="privacy.html">Политика конфиденциальности</a>
+      </div>
+    </div>
+    <div class="bar">
+      <span>© 2026 fashion ai · все права защищены</span>
+      <div class="links">
+        <a href="privacy.html">Политика конфиденциальности</a>
+        <span>made with neural networks · moscow</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
