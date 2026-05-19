@@ -612,6 +612,67 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
 }
+a.tile { color: inherit; text-decoration: none; display: block; }
+.tile-empty {
+  grid-column: 1 / -1;
+  padding: clamp(40px, 6vh, 80px) clamp(24px, 4vw, 56px);
+  text-align: center;
+  border: 1px dashed rgba(232,115,44,.3);
+  background: rgba(232,115,44,.04);
+}
+.tile-empty .kicker {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .26em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.tile-empty h3 {
+  margin: 0 0 10px;
+  font-family: var(--head-font);
+  font-weight: 400;
+  font-size: clamp(20px, 2.2vw, 28px);
+  color: var(--ink);
+}
+.tile-empty p {
+  margin: 0;
+  color: var(--ink-mute);
+  font-size: 14.5px;
+  max-width: 480px;
+  margin-inline: auto;
+}
+
+/* ── video lightbox ───────────────────────────────────────── */
+.vid-lightbox {
+  position: fixed; inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,.85);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  animation: vlb-in .25s ease;
+}
+@keyframes vlb-in { from { opacity: 0 } to { opacity: 1 } }
+.vid-lightbox video {
+  max-width: min(100%, 720px);
+  max-height: 90vh;
+  width: auto; height: auto;
+  display: block;
+  background: #000;
+  border: 1px solid rgba(232,115,44,.4);
+}
+.vlb-close {
+  position: absolute; top: 18px; right: 22px;
+  width: 40px; height: 40px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 28px; line-height: 1;
+  color: var(--ink);
+  background: rgba(0,0,0,.5);
+  border: 1px solid rgba(232,115,44,.4);
+  cursor: pointer;
+}
+.vlb-close:hover { color: var(--accent); border-color: var(--accent); }
 
 /* ── related navigation (next/prev categories) ─────────────── */
 .cat-related {
@@ -934,42 +995,43 @@ window.CATEGORIES = [
     id: "studio",
     title: "Студийная съёмка",
     desc: "Циклорама, ровный свет, нейтральный фон. Идеально для каталогов e-commerce.",
-    count: 15,
+    count: 100,
     kind: "photo",
   },
   {
     id: "walks",
     title: "Проходки",
     desc: "Уличный контекст: натуральный свет, движение, городская среда.",
-    count: 15,
+    count: 0,
     kind: "photo",
+    soon: true,
   },
   {
     id: "acc",
     title: "Аксессуары",
     desc: "Сумки, обувь, ювелирка. Крупный план и контекст на модели.",
-    count: 15,
+    count: 50,
     kind: "photo",
   },
   {
     id: "image",
     title: "Имиджевые фото",
     desc: "Лукбук-кадры, лайфстайл-сцены. Для бренд-кампаний и сезонных коллекций.",
-    count: 15,
+    count: 138,
     kind: "photo",
   },
   {
     id: "vid",
     title: "Имиджевые видео",
     desc: "Короткие 5–15 сек ролики: статичные позы, разворот, лёгкое движение.",
-    count: 15,
+    count: 8,
     kind: "video",
   },
   {
     id: "promo",
     title: "Промо-ролики",
     desc: "30-секундные ролики с монтажом, музыкой и нарративом для соцсетей.",
-    count: 15,
+    count: 8,
     kind: "video",
   },
 ];
@@ -995,11 +1057,11 @@ window.TRANSFORMS = [
   document.getElementById("cat-kicker").textContent = String(idx+1).padStart(2,"0") + " — " + cat.title;
   document.getElementById("cat-title").innerHTML = cat.title.replace(/\s/, "<br/>");
   document.getElementById("cat-idx").textContent = String(idx+1).padStart(2,"0");
-  document.getElementById("cat-count").textContent = String(cat.count);
-  document.getElementById("cat-kind").innerHTML = `<b>${cat.kind==="video"?"видео":"фото"}</b> · ${cat.kind==="video"?"H.264 / 1080p":"4K / 8 bit"}`;
+  document.getElementById("cat-count").textContent = cat.soon ? "—" : String(cat.count);
+  document.getElementById("cat-kind").innerHTML = `<b>${cat.kind==="video"?"видео":"фото"}</b> · ${cat.kind==="video"?"H.264 / 720p":"3K / 8 bit"}`;
   document.getElementById("cat-desc").textContent = cat.desc;
   document.getElementById("frame-title").textContent = cat.title;
-  document.getElementById("frame-meta").textContent = `${cat.count} работ${cat.kind==="video"?" · видео":""}`;
+  document.getElementById("frame-meta").textContent = cat.soon ? "скоро" : `${cat.count} работ${cat.kind==="video"?" · видео":""}`;
 
   // Highlight current in nav
   const menu = document.getElementById("cat-menu");
@@ -1007,13 +1069,39 @@ window.TRANSFORMS = [
 
   // Render tile grid
   const grid = document.getElementById("tile-grid");
-  let tiles = "";
-  for (let i = 1; i <= cat.count; i++) {
-    const cls = cat.kind === "video" ? "tile video" : "tile";
-    const playGlyph = cat.kind === "video" ? '<span class="play"></span>' : "";
-    tiles += `<div class="${cls}">${playGlyph}<img loading="lazy" src="https://picsum.photos/seed/fa-${cat.id}-${i}/520/680" alt="${cat.title} ${i}"/></div>`;
+  if (cat.soon || cat.count === 0) {
+    grid.innerHTML = `<div class="tile-empty"><span class="kicker">скоро</span><h3>Раздел готовится</h3><p>Каталожные кадры этой категории появятся в ближайшем апдейте.</p></div>`;
+  } else {
+    let tiles = "";
+    for (let i = 1; i <= cat.count; i++) {
+      const n = String(i).padStart(cat.kind === "video" ? 2 : 3, "0");
+      if (cat.kind === "video") {
+        const poster = `assets/${cat.id}/posters/${n}.jpg`;
+        const src    = `assets/${cat.id}/${n}.mp4`;
+        tiles += `<div class="tile video" data-src="${src}" data-poster="${poster}"><span class="play"></span><img loading="lazy" src="${poster}" alt="${cat.title} ${i}"/></div>`;
+      } else {
+        const thumb = `assets/${cat.id}/thumb/${n}.jpg`;
+        const full  = `assets/${cat.id}/full/${n}.jpg`;
+        tiles += `<a class="tile" href="${full}" target="_blank" rel="noopener"><img loading="lazy" src="${thumb}" alt="${cat.title} ${i}"/></a>`;
+      }
+    }
+    grid.innerHTML = tiles;
   }
-  grid.innerHTML = tiles;
+
+  // Video lightbox
+  grid.addEventListener("click", (e) => {
+    const tile = e.target.closest(".tile.video");
+    if (!tile) return;
+    const src = tile.dataset.src;
+    const poster = tile.dataset.poster;
+    const wrap = document.createElement("div");
+    wrap.className = "vid-lightbox";
+    wrap.innerHTML = `<button class="vlb-close" aria-label="Закрыть">×</button><video src="${src}" poster="${poster}" controls autoplay playsinline></video>`;
+    wrap.addEventListener("click", (ev) => {
+      if (ev.target.classList.contains("vid-lightbox") || ev.target.classList.contains("vlb-close")) wrap.remove();
+    });
+    document.body.appendChild(wrap);
+  });
 
   // Prev/next nav
   const prev = cats[(idx - 1 + cats.length) % cats.length];

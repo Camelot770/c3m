@@ -475,6 +475,23 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   text-transform: uppercase;
 }
 .fcard .bar .meta .arr { font-family: var(--body-font); }
+.fcard .cover-soon {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background:
+    repeating-linear-gradient(135deg, rgba(232,115,44,.06) 0 12px, transparent 12px 24px),
+    var(--bg-deep);
+}
+.fcard .cover-soon span {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .3em;
+  color: var(--accent);
+  text-transform: uppercase;
+  border: 1px solid var(--accent);
+  padding: 8px 14px;
+}
+.fcard-soon .bar { background: var(--bg-soft); color: var(--ink-mute); }
 
 /* ── gallery page header ──────────────────────────────────── */
 .cat-hero {
@@ -826,7 +843,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 <!-- ════════════ HERO ════════════ -->
 <section class="hero">
-  <img src="https://picsum.photos/seed/fashion-hero-lifestyle/1920/1080" alt="Lifestyle" />
+  <img src="assets/image/full/001.jpg" alt="FASHION AI" />
   <div class="hero-inner">
     <div></div>
     <div class="copy">
@@ -957,42 +974,43 @@ window.CATEGORIES = [
     id: "studio",
     title: "Студийная съёмка",
     desc: "Циклорама, ровный свет, нейтральный фон. Идеально для каталогов e-commerce.",
-    count: 15,
+    count: 100,
     kind: "photo",
   },
   {
     id: "walks",
     title: "Проходки",
     desc: "Уличный контекст: натуральный свет, движение, городская среда.",
-    count: 15,
+    count: 0,
     kind: "photo",
+    soon: true,
   },
   {
     id: "acc",
     title: "Аксессуары",
     desc: "Сумки, обувь, ювелирка. Крупный план и контекст на модели.",
-    count: 15,
+    count: 50,
     kind: "photo",
   },
   {
     id: "image",
     title: "Имиджевые фото",
     desc: "Лукбук-кадры, лайфстайл-сцены. Для бренд-кампаний и сезонных коллекций.",
-    count: 15,
+    count: 138,
     kind: "photo",
   },
   {
     id: "vid",
     title: "Имиджевые видео",
     desc: "Короткие 5–15 сек ролики: статичные позы, разворот, лёгкое движение.",
-    count: 15,
+    count: 8,
     kind: "video",
   },
   {
     id: "promo",
     title: "Промо-ролики",
     desc: "30-секундные ролики с монтажом, музыкой и нарративом для соцсетей.",
-    count: 15,
+    count: 8,
     kind: "video",
   },
 ];
@@ -1030,18 +1048,30 @@ window.TRANSFORMS = [
 // Build "6 форматов выдачи" cards
 (function(){
   const mount = document.getElementById("format-grid");
-  mount.innerHTML = window.CATEGORIES.map((c, i) => `
-    <a class="fcard" href="gallery.html?cat=${c.id}">
-      <span class="num">0${i+1}</span>
-      <div class="thumb">
-        <img loading="lazy" src="https://picsum.photos/seed/fa-cat-${c.id}-cover/500/650" alt="${c.title}"/>
-      </div>
-      <div class="bar">
-        <span class="name">${c.title}</span>
-        <span class="meta"><span>${c.count} работ${c.kind==="video"?" · видео":""}</span><span class="arr">→</span></span>
-      </div>
-    </a>
-  `).join("");
+  const coverFor = (c) => {
+    if (c.soon || c.count === 0) return null;
+    if (c.kind === "video") return `assets/${c.id}/posters/01.jpg`;
+    return `assets/${c.id}/thumb/001.jpg`;
+  };
+  mount.innerHTML = window.CATEGORIES.map((c, i) => {
+    const cover = coverFor(c);
+    const img = cover
+      ? `<img loading="lazy" src="${cover}" alt="${c.title}"/>`
+      : `<div class="cover-soon"><span>скоро</span></div>`;
+    const meta = c.soon || c.count === 0
+      ? `<span>в разработке</span><span class="arr">→</span>`
+      : `<span>${c.count} работ${c.kind==="video"?" · видео":""}</span><span class="arr">→</span>`;
+    return `
+      <a class="fcard${c.soon?' fcard-soon':''}" href="gallery.html?cat=${c.id}">
+        <span class="num">0${i+1}</span>
+        <div class="thumb">${img}</div>
+        <div class="bar">
+          <span class="name">${c.title}</span>
+          <span class="meta">${meta}</span>
+        </div>
+      </a>
+    `;
+  }).join("");
 })();
 </script>
 
