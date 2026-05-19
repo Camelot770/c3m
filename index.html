@@ -170,7 +170,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   overflow: hidden;
   background: var(--bg-deep);
 }
-.hero > img {
+.hero > img,
+.hero > video {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
@@ -843,7 +844,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 <!-- ════════════ HERO ════════════ -->
 <section class="hero">
-  <img src="assets/image/full/001.jpg" alt="FASHION AI" />
+  <video autoplay muted loop playsinline poster="assets/hero/intro.jpg" aria-label="FASHION AI">
+    <source src="assets/hero/intro.mp4" type="video/mp4" />
+  </video>
   <div class="hero-inner">
     <div></div>
     <div class="copy">
