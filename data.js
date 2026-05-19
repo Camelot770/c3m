@@ -5,7 +5,7 @@ window.CATEGORIES = [
     id: "studio",
     title: "Студийные фото",
     desc: "Циклорама, ровный свет, нейтральный фон. Идеально для каталогов e-commerce.",
-    count: 100,
+    count: 105,
     kind: "photo",
   },
   {
@@ -26,7 +26,7 @@ window.CATEGORIES = [
     id: "image",
     title: "Имиджевые фото",
     desc: "Лукбук-кадры, лайфстайл-сцены. Для бренд-кампаний и сезонных коллекций.",
-    count: 138,
+    count: 133,
     kind: "photo",
   },
   {
