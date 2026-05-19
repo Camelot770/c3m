@@ -253,7 +253,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ── about (Кто мы?) ──────────────────────────────────────── */
 .about {
-  padding: clamp(120px, 14vh, 200px) 0;
+  padding-block: clamp(120px, 14vh, 200px);
   position: relative;
 }
 .about .grid {
@@ -267,7 +267,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-family: var(--head-font);
   color: var(--accent);
   font-weight: 500;
-  font-size: clamp(120px, 18vw, 280px);
+  font-size: clamp(56px, 18vw, 280px);
   line-height: .82;
   letter-spacing: -.02em;
   text-transform: uppercase;
@@ -343,7 +343,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 /* ── transforms (before → after) ──────────────────────────── */
-.transforms { padding: clamp(100px, 12vh, 160px) 0; }
+.transforms { padding-block: clamp(100px, 12vh, 160px); }
 .transforms .rows {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -402,7 +402,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 /* ── 6 форматов выдачи (category grid) ─────────────────────── */
-.formats { padding: clamp(100px, 12vh, 160px) 0; }
+.formats { padding-block: clamp(100px, 12vh, 160px); }
 .formats .grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -654,7 +654,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* ── cta-block ────────────────────────────────────────────── */
 .cta-block {
   background: var(--bg-deep);
-  padding: clamp(100px, 12vh, 160px) 0 clamp(80px, 10vh, 120px);
+  padding-top: clamp(100px, 12vh, 160px);
+  padding-bottom: clamp(80px, 10vh, 120px);
 }
 .cta-block .grid {
   display: grid;
@@ -662,11 +663,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   align-items: end;
   gap: clamp(48px, 6vw, 96px);
 }
+.cta-block .grid > * { min-width: 0; }
 .cta-block h2 {
   margin: 0;
   font-family: var(--head-font);
   font-weight: 300;
-  font-size: clamp(64px, 9vw, 136px);
+  font-size: clamp(40px, 9vw, 136px);
   line-height: .88;
   letter-spacing: .01em;
   text-transform: uppercase;
@@ -684,6 +686,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   margin-top: 28px;
   display: flex; gap: 12px;
   justify-content: flex-end;
+  flex-wrap: wrap;
 }
 .btn {
   display: inline-flex;
