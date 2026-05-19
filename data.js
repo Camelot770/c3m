@@ -47,7 +47,7 @@ window.CATEGORIES = [
 ];
 
 window.TRANSFORMS = [
-  { tag: "сорочка / атласная",   studio: "studio-shot" },
-  { tag: "куртка-пуховик",       studio: "outdoor-walk" },
-  { tag: "кроссовки / hi-top",   studio: "street-context" },
+  { tag: "блуза · атлас",        studio: "студия · 3K каталог" },
+  { tag: "пуховик · oversize",   studio: "уличная проходка"     },
+  { tag: "сумка · кожа",         studio: "имидж · на модели"    },
 ];
