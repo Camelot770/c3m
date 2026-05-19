@@ -1,0 +1,1033 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>FASHION AI — каталожные снимки на модели из одного фото</title>
+
+<script>
+window.onerror = function(msg){
+  const m = String(msg||"");
+  if (m.includes("ResizeObserver loop") || m==="Script error." || m==="Script error") return true;
+  return false;
+};
+window.addEventListener("error", (e) => {
+  const m = e.message || "";
+  if (m.includes("ResizeObserver loop") || m==="Script error." || m==="Script error" || (!m && !e.filename)) {
+    e.stopImmediatePropagation(); e.preventDefault();
+  }
+}, true);
+if (typeof ResizeObserver !== "undefined") {
+  const N = ResizeObserver;
+  window.ResizeObserver = class extends N {
+    constructor(cb){
+      let sch=false, a;
+      super((e,o)=>{ a=[e,o]; if(sch)return; sch=true; requestAnimationFrame(()=>{ sch=false; try{cb(...a);}catch(_){} }); });
+    }
+  };
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ════════════════════════════════════════════════════════════
+   FASHION AI — shared styles
+   ════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg:        #3d3a38;
+  --bg-soft:   #44403d;
+  --bg-deep:   #2a2826;
+  --ink:       #efece6;
+  --ink-mute:  #b3aea7;
+  --ink-faint: #807a73;
+  --accent:    #e8732c;
+  --accent-2:  #c95c1c;
+  --line:      rgba(232,115,44,.85);
+  --max:       1440px;
+  --pad-x:     clamp(32px, 4vw, 80px);
+  --head-font: "Unbounded", "Inter", system-ui, sans-serif;
+  --body-font: "Inter", "Manrope", system-ui, sans-serif;
+  --mono:      "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body-font);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+.rule {
+  max-width: var(--max);
+  margin: 0 auto;
+  height: 1px;
+  background: var(--accent);
+  opacity: .9;
+}
+
+.kicker {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .26em;
+  color: var(--accent);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 16px;
+}
+
+/* ── nav (sticky top) ─────────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 18px 0;
+  background: rgba(45,42,40,.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(232,115,44,.25);
+}
+.nav .row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 40px;
+}
+.logo {
+  font-family: var(--head-font);
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: .32em;
+  font-size: 14px;
+}
+.logo .dot {
+  display: inline-block;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin: 0 .55em;
+  transform: translateY(-2px);
+}
+.nav .menu {
+  display: flex;
+  justify-content: center;
+  gap: clamp(14px, 2vw, 32px);
+  flex-wrap: wrap;
+}
+.nav .menu a {
+  font-family: var(--head-font);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--ink);
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s, color .2s;
+  white-space: nowrap;
+}
+.nav .menu a:hover,
+.nav .menu a.active { color: var(--accent); border-color: var(--accent); }
+.nav .cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--head-font);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  border: 1px solid var(--accent);
+  cursor: pointer;
+  transition: background .2s;
+}
+.nav .cta-btn:hover { background: var(--accent-2); }
+
+/* ── hero (landing) ───────────────────────────────────────── */
+.hero {
+  position: relative;
+  height: calc(100vh - 60px);
+  min-height: 720px;
+  max-height: 1080px;
+  overflow: hidden;
+  background: var(--bg-deep);
+}
+.hero > img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: saturate(.95) contrast(1.03);
+}
+.hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(40,38,36,.45) 0%, rgba(40,38,36,0) 30%, rgba(40,38,36,.1) 60%, rgba(40,38,36,.92) 100%),
+    linear-gradient(90deg, rgba(40,38,36,0) 30%, rgba(40,38,36,.55) 100%);
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: 0 var(--pad-x) 64px;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.hero .copy {
+  align-self: end;
+  justify-self: end;
+  text-align: right;
+  max-width: 720px;
+}
+.hero h1 {
+  margin: 0;
+  font-family: var(--head-font);
+  font-weight: 200;
+  font-size: clamp(64px, 9vw, 156px);
+  line-height: .9;
+  letter-spacing: .015em;
+  text-transform: uppercase;
+}
+.hero h1 .alt { color: var(--accent); font-weight: 300; }
+.hero .lead {
+  margin: 28px 0 0 auto;
+  width: 70%;
+  font-size: 14px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 300;
+}
+.hero .accent-line {
+  width: 96px; height: 1px;
+  background: var(--accent);
+  margin: 24px 0 0 auto;
+}
+.hero .bottom {
+  align-self: end;
+  display: flex; justify-content: space-between; align-items: end;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .22em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+}
+.hero .bottom .tag {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  position: absolute;
+  left: var(--pad-x);
+  bottom: 64px;
+}
+.hero .bottom .scroll {
+  display: flex; align-items: center; gap: 12px;
+  margin-left: auto;
+  color: var(--accent);
+}
+.hero .bottom .scroll::after {
+  content: "";
+  width: 60px; height: 1px; background: var(--accent);
+  display: inline-block;
+}
+
+/* ── about (Кто мы?) ──────────────────────────────────────── */
+.about {
+  padding: clamp(120px, 14vh, 200px) 0;
+  position: relative;
+}
+.about .grid {
+  display: grid;
+  grid-template-columns: 1.3fr .9fr;
+  gap: clamp(48px, 6vw, 96px);
+  align-items: center;
+}
+.about h2 {
+  margin: 0;
+  font-family: var(--head-font);
+  color: var(--accent);
+  font-weight: 500;
+  font-size: clamp(120px, 18vw, 280px);
+  line-height: .82;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+}
+.about h2 span { display: block; }
+.about h2 span:last-child { padding-left: 0.85em; }
+.about .text {
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 1.65;
+  color: var(--ink-mute);
+  max-width: 480px;
+  text-align: right;
+  margin-left: auto;
+}
+.about .text p + p { margin-top: 18px; }
+.about .text p:first-child {
+  color: var(--ink);
+  font-size: clamp(17px, 1.3vw, 20px);
+  font-weight: 400;
+}
+.about .stats {
+  margin-top: 64px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  border-top: 1px solid rgba(232,115,44,.3);
+  padding-top: 40px;
+}
+.about .stats .stat .num {
+  font-family: var(--head-font);
+  font-weight: 300;
+  font-size: clamp(36px, 4vw, 56px);
+  color: var(--accent);
+  letter-spacing: .01em;
+  line-height: 1;
+}
+.about .stats .stat .lab {
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ── section heads ────────────────────────────────────────── */
+.section-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 48px;
+  margin-bottom: 56px;
+}
+.section-title {
+  margin: 0;
+  font-family: var(--head-font);
+  font-weight: 300;
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 1;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+.section-title b { color: var(--accent); font-weight: 400; }
+.section-head .meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .22em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  text-align: right;
+  max-width: 320px;
+  padding-bottom: 8px;
+}
+
+/* ── transforms (before → after) ──────────────────────────── */
+.transforms { padding: clamp(100px, 12vh, 160px) 0; }
+.transforms .rows {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+.tcol .stage {
+  display: grid;
+  grid-template-columns: 1fr 56px 1fr;
+  align-items: center;
+  gap: 14px;
+}
+.tcard {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  position: relative;
+  background: #1c1a19;
+}
+.tcard.before { background: #f3efe9; }
+.tcard.before::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 55% at 50% 55%, rgba(0,0,0,0) 0%, rgba(0,0,0,.06) 75%, rgba(0,0,0,.1) 100%);
+}
+.tcard.before img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+  filter: contrast(.96);
+}
+.tcard.before .lbl {
+  position: absolute;
+  top: 12px; left: 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: #6a655e;
+  text-transform: uppercase;
+  z-index: 2;
+}
+.tcard.after img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease, filter .5s ease;
+}
+.tcard.after:hover img { transform: scale(1.04); filter: brightness(.92); }
+.tarr { color: var(--ink-mute); display: flex; align-items: center; justify-content: center; }
+.tarr svg { width: 56px; height: 12px; }
+.tcaption {
+  margin-top: 18px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+/* ── 6 форматов выдачи (category grid) ─────────────────────── */
+.formats { padding: clamp(100px, 12vh, 160px) 0; }
+.formats .grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+.fcard {
+  background: var(--bg-deep);
+  border: 1px solid rgba(232,115,44,.4);
+  overflow: hidden;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  transition: transform .35s ease, border-color .35s ease;
+  color: inherit;
+}
+.fcard:hover { transform: translateY(-6px); border-color: var(--accent); }
+.fcard .num {
+  position: absolute;
+  top: 12px; right: 12px;
+  z-index: 3;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: #fff;
+  background: rgba(0,0,0,.5);
+  padding: 4px 8px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.fcard .thumb {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  position: relative;
+}
+.fcard .thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .55s ease, filter .55s ease;
+}
+.fcard:hover .thumb img { transform: scale(1.07); filter: brightness(.85); }
+.fcard .thumb::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%);
+}
+.fcard .bar {
+  background: var(--accent);
+  color: #fff;
+  padding: 14px 14px 18px;
+  font-family: var(--head-font);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 110px;
+  justify-content: space-between;
+}
+.fcard .bar .name { line-height: 1.15; }
+.fcard .bar .meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  opacity: .88;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: uppercase;
+}
+.fcard .bar .meta .arr { font-family: var(--body-font); }
+
+/* ── gallery page header ──────────────────────────────────── */
+.cat-hero {
+  position: relative;
+  padding: clamp(80px, 10vh, 140px) 0 clamp(40px, 5vh, 60px);
+}
+.cat-hero .grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  align-items: end;
+  gap: clamp(40px, 5vw, 80px);
+}
+.cat-hero h1 {
+  margin: 0;
+  font-family: var(--head-font);
+  font-weight: 300;
+  font-size: clamp(56px, 8vw, 120px);
+  line-height: .9;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.cat-hero h1 b { color: var(--accent); font-weight: 400; }
+.cat-hero .meta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .22em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  padding-bottom: 12px;
+}
+.cat-hero .meta b { color: var(--accent); font-weight: 500; }
+.cat-hero .desc {
+  margin-top: 24px;
+  font-size: clamp(16px, 1.1vw, 18px);
+  color: var(--ink-mute);
+  max-width: 420px;
+  text-align: right;
+  line-height: 1.5;
+  margin-left: auto;
+}
+.crumbs {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .26em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.crumbs a:hover { color: var(--accent); }
+.crumbs .sep { opacity: .5; }
+.crumbs b { color: var(--ink); font-weight: 400; }
+
+/* ── gallery grid (category page) ────────────────────────── */
+.cat-gallery { padding: 24px 0 clamp(80px, 10vh, 140px); }
+.cat-gallery .frame {
+  border: 1px solid var(--accent);
+  background: rgba(0,0,0,.07);
+  padding: 14px;
+}
+.cat-gallery .frame-bar {
+  background: var(--accent);
+  color: #fff;
+  padding: 14px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--head-font);
+  font-size: 14px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin: -14px -14px 14px;
+}
+.cat-gallery .frame-bar .meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  opacity: .92;
+}
+.cat-gallery .grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+.tile {
+  aspect-ratio: 3 / 4;
+  background: #1c1a19;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+.tile img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease, filter .5s ease;
+}
+.tile:hover img { transform: scale(1.06); filter: brightness(.85); }
+.tile::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,.4) 100%);
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+.tile:hover::after { opacity: 1; }
+.tile.video::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 50%; top: 50%;
+  width: 44px; height: 44px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+.tile.video .play {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-43%, -50%);
+  z-index: 3;
+  width: 0; height: 0;
+  border-left: 12px solid #fff;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+
+/* ── related navigation (next/prev categories) ─────────────── */
+.cat-related {
+  padding: clamp(40px, 5vh, 60px) 0 clamp(100px, 12vh, 140px);
+  border-top: 1px solid rgba(232,115,44,.2);
+}
+.cat-related .row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.cat-related a {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid rgba(232,115,44,.3);
+  transition: border-color .25s, background .25s;
+  position: relative;
+  overflow: hidden;
+}
+.cat-related a:hover { border-color: var(--accent); background: var(--bg-deep); }
+.cat-related a.next { align-items: flex-end; text-align: right; }
+.cat-related a .lbl {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 12px;
+}
+.cat-related a .nm {
+  font-family: var(--head-font);
+  font-weight: 400;
+  font-size: clamp(22px, 2.4vw, 30px);
+  color: var(--ink);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.cat-related a:hover .nm { color: var(--accent); }
+.cat-related a.disabled { pointer-events: none; opacity: .25; }
+
+/* ── cta-block ────────────────────────────────────────────── */
+.cta-block {
+  background: var(--bg-deep);
+  padding: clamp(100px, 12vh, 160px) 0 clamp(80px, 10vh, 120px);
+}
+.cta-block .grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  align-items: end;
+  gap: clamp(48px, 6vw, 96px);
+}
+.cta-block h2 {
+  margin: 0;
+  font-family: var(--head-font);
+  font-weight: 300;
+  font-size: clamp(64px, 9vw, 136px);
+  line-height: .88;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+.cta-block h2 b { color: var(--accent); font-weight: 400; }
+.cta-block .sub {
+  text-align: right;
+  font-size: clamp(15px, 1.2vw, 18px);
+  color: var(--ink-mute);
+  line-height: 1.55;
+  max-width: 400px;
+  margin-left: auto;
+}
+.cta-block .actions {
+  margin-top: 28px;
+  display: flex; gap: 12px;
+  justify-content: flex-end;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  font-family: var(--head-font);
+  font-size: 12px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid var(--accent);
+  cursor: pointer;
+  transition: background .25s ease;
+}
+.btn:hover { background: var(--accent-2); }
+.btn.ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink-faint);
+}
+.btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── footer ───────────────────────────────────────────────── */
+.site-footer {
+  padding: 60px 0 36px;
+  background: var(--bg-deep);
+  border-top: 1px solid rgba(232,115,44,.2);
+}
+.site-footer .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.site-footer .col h4 {
+  margin: 0 0 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .26em;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.site-footer .col p, .site-footer .col a {
+  margin: 5px 0;
+  color: var(--ink);
+  font-size: 15px;
+  display: block;
+  text-decoration: none;
+}
+.site-footer .col a:hover { color: var(--accent); }
+.site-footer .socials {
+  display: flex; gap: 10px;
+  margin-top: 4px;
+}
+.site-footer .socials a {
+  width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  transition: background .2s ease, color .2s ease;
+}
+.site-footer .socials a:hover { background: var(--accent); color: #fff; }
+.site-footer .socials svg { width: 14px; height: 14px; }
+.site-footer .bar {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(232,115,44,.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+/* ── responsive ───────────────────────────────────────────── */
+@media (max-width: 1280px) {
+  .formats .grid { grid-template-columns: repeat(3, 1fr); }
+  .cat-gallery .grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 1024px) {
+  .nav .menu { display: none; }
+  .about .grid { grid-template-columns: 1fr; }
+  .about .text { text-align: left; max-width: none; margin-left: 0; }
+  .transforms .rows { grid-template-columns: 1fr; }
+  .cta-block .grid { grid-template-columns: 1fr; }
+  .cta-block .sub, .cta-block .actions { text-align: left; justify-content: flex-start; margin-left: 0; }
+  .site-footer .grid { grid-template-columns: 1fr 1fr; }
+  .about .stats { grid-template-columns: repeat(2, 1fr); }
+  .cat-hero .grid { grid-template-columns: 1fr; }
+  .cat-hero .meta, .cat-hero .desc { align-items: flex-start; text-align: left; margin-left: 0; }
+  .cat-gallery .grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 720px) {
+  .formats .grid { grid-template-columns: repeat(2, 1fr); }
+  .cat-gallery .grid { grid-template-columns: repeat(2, 1fr); }
+  .about .stats { grid-template-columns: 1fr; }
+  .site-footer .grid { grid-template-columns: 1fr; }
+  .cat-related .row { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ════════════ NAV ════════════ -->
+<header class="nav" id="top">
+  <div class="row wrap">
+    <a href="index.html#top" class="logo">FASHION<span class="dot"></span>AI</a>
+    <nav class="menu">
+      <a href="gallery.html?cat=studio">Студийная съёмка</a>
+      <a href="gallery.html?cat=walks">Проходки</a>
+      <a href="gallery.html?cat=acc">Аксессуары</a>
+      <a href="gallery.html?cat=image">Имиджевые фото</a>
+      <a href="gallery.html?cat=vid">Имиджевые видео</a>
+      <a href="gallery.html?cat=promo">Промо-ролики</a>
+    </nav>
+    <a href="#cta" class="cta-btn">Запросить пилот →</a>
+  </div>
+</header>
+
+<!-- ════════════ HERO ════════════ -->
+<section class="hero">
+  <img src="https://picsum.photos/seed/fashion-hero-lifestyle/1920/1080" alt="Lifestyle" />
+  <div class="hero-inner">
+    <div></div>
+    <div class="copy">
+      <h1>Текст<br/>Текст <span class="alt">Текст</span></h1>
+      <div class="accent-line"></div>
+      <p class="lead">Тут бла бла бла — тут бла бла бла. Превращаем фото вещи в каталожный кадр на модели.</p>
+    </div>
+    <div class="bottom">
+      <span>↓ scroll</span>
+      <span>fashion·ai · 2026</span>
+    </div>
+    <span class="tag">— ai-каталог из одного фото —</span>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ════════════ ABOUT ════════════ -->
+<section class="about wrap">
+  <div class="grid">
+    <div>
+      <span class="kicker">01 — О сервисе</span>
+      <h2><span>Кто</span><span>мы?</span></h2>
+    </div>
+    <div class="text">
+      <p>FASHION AI — нейросетевой сервис, превращающий обычные фотографии вещей со склада в каталожные снимки на модели.</p>
+      <p>Без студий, реквизита и многочасовых смен. Загрузите фото товара — получите серию профессиональных кадров в любом сеттинге: студия, проходка, имиджевая съёмка или промо-ролик.</p>
+      <p>Мы работаем с премиум-сегментом, e-commerce и брендами, для которых скорость и единообразие визуала — приоритет.</p>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="num">~42с</div><div class="lab">средний срок генерации</div></div>
+    <div class="stat"><div class="num">–90%</div><div class="lab">экономия на продакшне</div></div>
+    <div class="stat"><div class="num">4K</div><div class="lab">разрешение выдачи</div></div>
+    <div class="stat"><div class="num">12</div><div class="lab">сеттингов в библиотеке</div></div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ════════════ TRANSFORMS ════════════ -->
+<section class="transforms wrap">
+  <div class="section-head">
+    <div>
+      <span class="kicker">02 — Главная фишка</span>
+      <h2 class="section-title">Из мятой вещи —<br/><b>в каталог</b></h2>
+    </div>
+    <div class="meta">Три типовых сценария трансформации. От фото вещи на белом фоне до готового кадра на модели — в среднем 42 секунды.</div>
+  </div>
+  <div class="rows" id="transform-rows"></div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ════════════ FORMATS / 6 категорий ════════════ -->
+<section class="formats wrap" id="formats">
+  <div class="section-head">
+    <div>
+      <span class="kicker">03 — Что мы умеем</span>
+      <h2 class="section-title">Шесть форматов <b>выдачи</b></h2>
+    </div>
+    <div class="meta">Кликни по карточке — попадёшь на страницу категории с 15 примерами работ.</div>
+  </div>
+  <div class="grid" id="format-grid"></div>
+</section>
+
+<!-- ════════════ CTA ════════════ -->
+<section class="cta-block" id="cta">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <span class="kicker">04 — Связаться</span>
+        <h2>Готовы<br/><b>обсудить</b>?</h2>
+      </div>
+      <div>
+        <p class="sub">Пришлите 5–10 фотографий ваших товаров — соберём пилот-серию каталожных кадров за 24 часа.</p>
+        <div class="actions">
+          <button class="btn ghost">Скачать кейсы</button>
+          <button class="btn">Запросить пилот →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="grid">
+      <div class="col">
+        <a href="index.html#top" class="logo" style="font-size:13px;">FASHION<span class="dot"></span>AI</a>
+        <p style="margin-top:14px; color:var(--ink-faint); font-size:13px; max-width:260px;">AI-сервис каталожной съёмки для премиум-сегмента и e-commerce.</p>
+      </div>
+      <div class="col">
+        <h4>Email</h4>
+        <a href="mailto:hello@fashion.ai">hello@fashion.ai</a>
+        <a href="mailto:sales@fashion.ai">sales@fashion.ai</a>
+      </div>
+      <div class="col">
+        <h4>Телефон</h4>
+        <p>+7 495 000 00 00</p>
+        <p style="color:var(--ink-faint); font-size:12px;">пн–пт, 10:00 – 20:00 мск</p>
+      </div>
+      <div class="col">
+        <h4>Соцсети</h4>
+        <div class="socials">
+          <a href="#" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.94 4.32 18.5 20.1c-.26 1.15-.94 1.43-1.9.89l-5.26-3.88-2.54 2.45c-.28.28-.52.52-1.06.52l.38-5.36 9.78-8.84c.43-.38-.09-.59-.66-.21L5.16 12.3.9 10.97c-.93-.29-.94-.93.19-1.37L20.74 2.94c.78-.29 1.46.17 1.2 1.38Z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="bar">
+      <span>© 2026 fashion ai · все права защищены</span>
+      <span>made with neural networks · moscow</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Shared data for FASHION AI site
+
+window.CATEGORIES = [
+  {
+    id: "studio",
+    title: "Студийная съёмка",
+    desc: "Циклорама, ровный свет, нейтральный фон. Идеально для каталогов e-commerce.",
+    count: 15,
+    kind: "photo",
+  },
+  {
+    id: "walks",
+    title: "Проходки",
+    desc: "Уличный контекст: натуральный свет, движение, городская среда.",
+    count: 15,
+    kind: "photo",
+  },
+  {
+    id: "acc",
+    title: "Аксессуары",
+    desc: "Сумки, обувь, ювелирка. Крупный план и контекст на модели.",
+    count: 15,
+    kind: "photo",
+  },
+  {
+    id: "image",
+    title: "Имиджевые фото",
+    desc: "Лукбук-кадры, лайфстайл-сцены. Для бренд-кампаний и сезонных коллекций.",
+    count: 15,
+    kind: "photo",
+  },
+  {
+    id: "vid",
+    title: "Имиджевые видео",
+    desc: "Короткие 5–15 сек ролики: статичные позы, разворот, лёгкое движение.",
+    count: 15,
+    kind: "video",
+  },
+  {
+    id: "promo",
+    title: "Промо-ролики",
+    desc: "30-секундные ролики с монтажом, музыкой и нарративом для соцсетей.",
+    count: 15,
+    kind: "video",
+  },
+];
+
+window.TRANSFORMS = [
+  { tag: "сорочка / атласная",   studio: "studio-shot" },
+  { tag: "куртка-пуховик",       studio: "outdoor-walk" },
+  { tag: "кроссовки / hi-top",   studio: "street-context" },
+];
+
+</script>
+<script>
+// Build before/after rows
+(function(){
+  const mount = document.getElementById("transform-rows");
+  mount.innerHTML = window.TRANSFORMS.map((t, i) => `
+    <div class="tcol">
+      <div class="stage">
+        <div class="tcard before">
+          <span class="lbl">До · ${String(i+1).padStart(2,"0")}</span>
+          <img loading="lazy" src="https://picsum.photos/seed/fa-garment-${i+1}/600/700" alt="Вещь до"/>
+        </div>
+        <div class="tarr" aria-hidden="true">
+          <svg viewBox="0 0 56 12" fill="none"><path d="M0 6h52M46 1l8 5-8 5" stroke="currentColor" stroke-width="1"/></svg>
+        </div>
+        <div class="tcard after">
+          <img loading="lazy" src="https://picsum.photos/seed/fa-model-${i+1}/600/800" alt="Вещь на модели"/>
+        </div>
+      </div>
+      <div class="tcaption">${t.tag} &nbsp;·&nbsp; ${t.studio}</div>
+    </div>
+  `).join("");
+})();
+
+// Build "6 форматов выдачи" cards
+(function(){
+  const mount = document.getElementById("format-grid");
+  mount.innerHTML = window.CATEGORIES.map((c, i) => `
+    <a class="fcard" href="gallery.html?cat=${c.id}">
+      <span class="num">0${i+1}</span>
+      <div class="thumb">
+        <img loading="lazy" src="https://picsum.photos/seed/fa-cat-${c.id}-cover/500/650" alt="${c.title}"/>
+      </div>
+      <div class="bar">
+        <span class="name">${c.title}</span>
+        <span class="meta"><span>${c.count} работ${c.kind==="video"?" · видео":""}</span><span class="arr">→</span></span>
+      </div>
+    </a>
+  `).join("");
+})();
+</script>
+
+</body>
+</html>
