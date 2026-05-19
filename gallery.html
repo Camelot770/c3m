@@ -877,7 +877,7 @@ a.tile { color: inherit; text-decoration: none; display: block; }
   <div class="row wrap">
     <a href="index.html#top" class="logo">FASHION<span class="dot"></span>AI</a>
     <nav class="menu" id="cat-menu"></nav>
-    <a href="index.html#cta" class="cta-btn">Запросить пилот →</a>
+    <a href="index.html#cta" class="cta-btn">Связаться →</a>
   </div>
 </header>
 
@@ -993,22 +993,21 @@ a.tile { color: inherit; text-decoration: none; display: block; }
 window.CATEGORIES = [
   {
     id: "studio",
-    title: "Студийная съёмка",
+    title: "Студийные фото",
     desc: "Циклорама, ровный свет, нейтральный фон. Идеально для каталогов e-commerce.",
     count: 100,
     kind: "photo",
   },
   {
-    id: "walks",
-    title: "Проходки",
-    desc: "Уличный контекст: натуральный свет, движение, городская среда.",
-    count: 0,
-    kind: "photo",
-    soon: true,
+    id: "studio-vid",
+    title: "Студийные видео",
+    desc: "Короткие ролики в студии: разворот модели, фронт-бэк, лёгкое движение.",
+    count: 8,
+    kind: "video",
   },
   {
     id: "acc",
-    title: "Аксессуары",
+    title: "Обувь и аксессуары",
     desc: "Сумки, обувь, ювелирка. Крупный план и контекст на модели.",
     count: 50,
     kind: "photo",
@@ -1031,8 +1030,9 @@ window.CATEGORIES = [
     id: "promo",
     title: "Промо-ролики",
     desc: "30-секундные ролики с монтажом, музыкой и нарративом для соцсетей.",
-    count: 8,
     kind: "video",
+    external: "https://drive.google.com/drive/folders/1i9yhsr8U4dvMIZJ5K3lfYYzJamhoy9YK?usp=sharing",
+    cover: "assets/promo-cover.jpg",
   },
 ];
 
@@ -1051,6 +1051,9 @@ window.TRANSFORMS = [
   const idx = cats.findIndex(c => c.id === id);
   const cat = cats[idx] || cats[0];
 
+  // External categories — redirect straight to the external link
+  if (cat.external) { window.location.replace(cat.external); return; }
+
   // Update title & meta
   document.title = `FASHION AI · ${cat.title}`;
   document.getElementById("crumb-current").textContent = cat.title;
@@ -1065,7 +1068,11 @@ window.TRANSFORMS = [
 
   // Highlight current in nav
   const menu = document.getElementById("cat-menu");
-  menu.innerHTML = cats.map(c => `<a class="${c.id===cat.id?'active':''}" href="gallery.html?cat=${c.id}">${c.title}</a>`).join("");
+  menu.innerHTML = cats.map(c => {
+    const href = c.external ? c.external : `gallery.html?cat=${c.id}`;
+    const attrs = c.external ? ' target="_blank" rel="noopener"' : '';
+    return `<a class="${c.id===cat.id?'active':''}" href="${href}"${attrs}>${c.title}</a>`;
+  }).join("");
 
   // Render tile grid
   const grid = document.getElementById("tile-grid");
@@ -1103,15 +1110,17 @@ window.TRANSFORMS = [
     document.body.appendChild(wrap);
   });
 
-  // Prev/next nav
-  const prev = cats[(idx - 1 + cats.length) % cats.length];
-  const next = cats[(idx + 1) % cats.length];
-  const prevA = document.getElementById("prev-cat");
-  const nextA = document.getElementById("next-cat");
-  prevA.href = `gallery.html?cat=${prev.id}`;
-  nextA.href = `gallery.html?cat=${next.id}`;
-  document.getElementById("prev-name").textContent = prev.title;
-  document.getElementById("next-name").textContent = next.title;
+  // Prev/next nav (skip categories without an internal gallery page)
+  const navCats = cats.filter(c => !c.external);
+  const navIdx = navCats.findIndex(c => c.id === cat.id);
+  if (navIdx >= 0) {
+    const prev = navCats[(navIdx - 1 + navCats.length) % navCats.length];
+    const next = navCats[(navIdx + 1) % navCats.length];
+    document.getElementById("prev-cat").href = `gallery.html?cat=${prev.id}`;
+    document.getElementById("next-cat").href = `gallery.html?cat=${next.id}`;
+    document.getElementById("prev-name").textContent = prev.title;
+    document.getElementById("next-name").textContent = next.title;
+  }
 })();
 </script>
 
