@@ -761,12 +761,22 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: .22em;
   color: var(--ink-faint);
   text-transform: uppercase;
 }
+.site-footer .bar .links { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+.site-footer .bar a {
+  color: var(--ink-faint);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  transition: color .2s, border-color .2s;
+}
+.site-footer .bar a:hover { color: var(--accent); border-color: var(--accent); }
 
 /* ── responsive ───────────────────────────────────────────── */
 @media (max-width: 1280px) {
@@ -931,7 +941,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
     </div>
     <div class="bar">
       <span>© 2026 fashion ai · все права защищены</span>
-      <span>made with neural networks · moscow</span>
+      <div class="links">
+        <a href="privacy.html">Политика конфиденциальности</a>
+        <span>made with neural networks · moscow</span>
+      </div>
     </div>
   </div>
 </footer>
