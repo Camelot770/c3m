@@ -3,22 +3,21 @@
 window.CATEGORIES = [
   {
     id: "studio",
-    title: "Студийная съёмка",
+    title: "Студийные фото",
     desc: "Циклорама, ровный свет, нейтральный фон. Идеально для каталогов e-commerce.",
     count: 100,
     kind: "photo",
   },
   {
-    id: "walks",
-    title: "Проходки",
-    desc: "Уличный контекст: натуральный свет, движение, городская среда.",
-    count: 0,
-    kind: "photo",
-    soon: true,
+    id: "studio-vid",
+    title: "Студийные видео",
+    desc: "Короткие ролики в студии: разворот модели, фронт-бэк, лёгкое движение.",
+    count: 8,
+    kind: "video",
   },
   {
     id: "acc",
-    title: "Аксессуары",
+    title: "Обувь и аксессуары",
     desc: "Сумки, обувь, ювелирка. Крупный план и контекст на модели.",
     count: 50,
     kind: "photo",
@@ -41,8 +40,9 @@ window.CATEGORIES = [
     id: "promo",
     title: "Промо-ролики",
     desc: "30-секундные ролики с монтажом, музыкой и нарративом для соцсетей.",
-    count: 8,
     kind: "video",
+    external: "https://drive.google.com/drive/folders/1i9yhsr8U4dvMIZJ5K3lfYYzJamhoy9YK?usp=sharing",
+    cover: "assets/promo-cover.jpg",
   },
 ];
 
