@@ -40,9 +40,8 @@ window.CATEGORIES = [
     id: "promo",
     title: "Промо-ролики",
     desc: "30-секундные ролики с монтажом, музыкой и нарративом для соцсетей.",
+    count: 1,
     kind: "video",
-    external: "assets/promo.mp4",
-    cover: "assets/promo-cover.jpg",
   },
 ];
 
