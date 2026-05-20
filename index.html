@@ -875,13 +875,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 <!-- ════════════ TRANSFORMS ════════════ -->
 <section class="transforms wrap">
-  <div class="section-head">
-    <div>
-      <span class="kicker">02 — Как это работает</span>
-      <h2 class="section-title">Из фото вещи —<br/><b>в кадр на модели</b></h2>
-    </div>
-    <div class="meta">Три типовых сценария трансформации. От снимка вещи на стенде или белом фоне — до законченного fashion-кадра на модели в нужном сеттинге. В среднем 40 секунд на кадр.</div>
-  </div>
   <div class="rows" id="transform-rows"></div>
 </section>
 
@@ -1006,23 +999,25 @@ window.TRANSFORMS = [
 // Build before/after rows
 (function(){
   const mount = document.getElementById("transform-rows");
-  mount.innerHTML = window.TRANSFORMS.map((t, i) => `
+  mount.innerHTML = window.TRANSFORMS.map((t, i) => {
+    const n = String(i+1).padStart(2,"0");
+    return `
     <div class="tcol">
       <div class="stage">
         <div class="tcard before">
-          <span class="lbl">До · ${String(i+1).padStart(2,"0")}</span>
-          <img loading="lazy" src="https://picsum.photos/seed/fa-garment-${i+1}/600/700" alt="Вещь до"/>
+          <span class="lbl">До · ${n}</span>
+          <img loading="lazy" src="assets/transforms/${n}-before.jpg" alt="Вещь до"/>
         </div>
         <div class="tarr" aria-hidden="true">
           <svg viewBox="0 0 56 12" fill="none"><path d="M0 6h52M46 1l8 5-8 5" stroke="currentColor" stroke-width="1"/></svg>
         </div>
         <div class="tcard after">
-          <img loading="lazy" src="https://picsum.photos/seed/fa-model-${i+1}/600/800" alt="Вещь на модели"/>
+          <img loading="lazy" src="assets/transforms/${n}-after.jpg" alt="Кадр на модели"/>
         </div>
       </div>
-      <div class="tcaption">${t.tag} &nbsp;·&nbsp; ${t.studio}</div>
     </div>
-  `).join("");
+  `;
+  }).join("");
 })();
 
 // Build format cards
