@@ -41,7 +41,7 @@ window.CATEGORIES = [
     title: "Промо-ролики",
     desc: "30-секундные ролики с монтажом, музыкой и нарративом для соцсетей.",
     kind: "video",
-    external: "https://drive.google.com/drive/folders/1i9yhsr8U4dvMIZJ5K3lfYYzJamhoy9YK?usp=sharing",
+    external: "assets/promo-cover.jpg",
     cover: "assets/promo-cover.jpg",
   },
 ];
