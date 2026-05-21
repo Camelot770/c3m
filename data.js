@@ -12,7 +12,7 @@ window.CATEGORIES = [
     id: "studio-vid",
     title: "Студийные видео",
     desc: "Короткие ролики в студии: разворот модели, фронт-бэк, лёгкое движение.",
-    count: 1,
+    count: 8,
     kind: "video",
   },
   {
@@ -33,7 +33,7 @@ window.CATEGORIES = [
     id: "vid",
     title: "Имиджевые видео",
     desc: "Короткие 5–15 сек ролики: статичные позы, разворот, лёгкое движение.",
-    count: 15,
+    count: 8,
     kind: "video",
   },
   {
