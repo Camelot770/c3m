@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>FASHION AI — каталожные снимки на модели из одного фото</title>
+<title>C3M — каталожные снимки на модели из одного фото</title>
 
 <script>
 window.onerror = function(msg){
@@ -112,20 +112,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .nav .row > * { min-width: 0; }
 .logo {
-  font-family: var(--head-font);
+  display: inline-flex;
+  align-items: center;
   color: var(--accent);
-  font-weight: 500;
-  letter-spacing: .32em;
-  font-size: 14px;
 }
-.logo .dot {
-  display: inline-block;
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-  margin: 0 .55em;
-  transform: translateY(-2px);
-}
+.logo img { display: block; height: 28px; width: auto; }
+.site-footer .logo img { height: 22px; }
 .nav .menu {
   display: flex;
   justify-content: center;
@@ -822,7 +814,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 <!-- ════════════ NAV ════════════ -->
 <header class="nav" id="top">
   <div class="row wrap">
-    <a href="index.html#top" class="logo">FASHION<span class="dot"></span>AI</a>
+    <a href="index.html#top" class="logo"><img src="assets/logo/c3m.svg" alt="C3M"/></a>
     <nav class="menu">
       <a href="gallery.html?cat=studio">Студийные фото</a>
       <a href="gallery.html?cat=studio-vid">Студийные видео</a>
@@ -837,7 +829,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 <!-- ════════════ HERO ════════════ -->
 <section class="hero">
-  <video autoplay muted loop playsinline poster="assets/hero/intro.jpg" aria-label="FASHION AI">
+  <video autoplay muted loop playsinline poster="assets/hero/intro.jpg" aria-label="C3M">
     <source src="assets/hero/intro.mp4" type="video/mp4" />
   </video>
   <div class="hero-inner">
@@ -849,7 +841,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
     </div>
     <div class="bottom">
       <span>↓ scroll</span>
-      <span>fashion·ai · 2026</span>
+      <span>c3m · 2026</span>
     </div>
     <span class="tag">— ai-каталог из одного фото —</span>
   </div>
@@ -865,7 +857,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
       <h2><span>Кто</span><span>мы?</span></h2>
     </div>
     <div class="text">
-      <p>FASHION AI — агентство визуального контента на нейросетях. Заменяем студию, MUA, модель и ретушёра единым AI-пайплайном.</p>
+      <p>C3M — агентство визуального контента на нейросетях. Заменяем студию, MUA, модель и ретушёра единым AI-пайплайном.</p>
       <p>Загружаете фото вещи — получаете готовую серию кадров на модели: каталог, имидж, видео. Для e-commerce и брендов, которым важны скорость и единообразие визуала.</p>
     </div>
   </div>
@@ -900,7 +892,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
       </div>
       <div>
         <div class="actions">
-          <a class="btn" href="mailto:Fashionai006@gmail.com?subject=Связаться%20—%20FASHION%20AI">Связаться →</a>
+          <a class="btn" href="mailto:Fashionai006@gmail.com?subject=Связаться%20—%20C3M">Связаться →</a>
         </div>
       </div>
     </div>
@@ -912,7 +904,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   <div class="wrap">
     <div class="grid">
       <div class="col">
-        <a href="index.html#top" class="logo" style="font-size:13px;">FASHION<span class="dot"></span>AI</a>
+        <a href="index.html#top" class="logo" style="font-size:13px;"><img src="assets/logo/c3m.svg" alt="C3M"/></a>
         <p style="margin-top:14px; color:var(--ink-faint); font-size:13px; max-width:260px;">Агентство визуального контента на нейросетях. Каталоги, имидж и видео для модных брендов и e-commerce.</p>
       </div>
       <div class="col">
@@ -934,7 +926,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
       </div>
     </div>
     <div class="bar">
-      <span>© 2026 fashion ai · все права защищены</span>
+      <span>© 2026 c3m · все права защищены</span>
       <div class="links">
         <a href="privacy.html">Политика конфиденциальности</a>
         <span>made with neural networks · moscow</span>
