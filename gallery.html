@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>FASHION AI · Категория</title>
+<title>C3M · Категория</title>
 
 <script>
 window.onerror = function(msg){
@@ -112,20 +112,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .nav .row > * { min-width: 0; }
 .logo {
-  font-family: var(--head-font);
+  display: inline-flex;
+  align-items: center;
   color: var(--accent);
-  font-weight: 500;
-  letter-spacing: .32em;
-  font-size: 14px;
 }
-.logo .dot {
-  display: inline-block;
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-  margin: 0 .55em;
-  transform: translateY(-2px);
-}
+.logo img { display: block; height: 28px; width: auto; }
+.site-footer .logo img { height: 22px; }
 .nav .menu {
   display: flex;
   justify-content: center;
@@ -877,7 +869,7 @@ a.tile { color: inherit; text-decoration: none; display: block; }
 <!-- ════════════ NAV ════════════ -->
 <header class="nav" id="top">
   <div class="row wrap">
-    <a href="index.html#top" class="logo">FASHION<span class="dot"></span>AI</a>
+    <a href="index.html#top" class="logo"><img src="assets/logo/c3m.svg" alt="C3M"/></a>
     <nav class="menu" id="cat-menu"></nav>
     <a href="index.html#cta" class="cta-btn">Связаться →</a>
   </div>
@@ -943,7 +935,7 @@ a.tile { color: inherit; text-decoration: none; display: block; }
       </div>
       <div>
         <div class="actions">
-          <a class="btn" href="mailto:Fashionai006@gmail.com?subject=Связаться%20—%20FASHION%20AI">Связаться →</a>
+          <a class="btn" href="mailto:Fashionai006@gmail.com?subject=Связаться%20—%20C3M">Связаться →</a>
         </div>
       </div>
     </div>
@@ -955,7 +947,7 @@ a.tile { color: inherit; text-decoration: none; display: block; }
   <div class="wrap">
     <div class="grid">
       <div class="col">
-        <a href="index.html#top" class="logo" style="font-size:13px;">FASHION<span class="dot"></span>AI</a>
+        <a href="index.html#top" class="logo" style="font-size:13px;"><img src="assets/logo/c3m.svg" alt="C3M"/></a>
         <p style="margin-top:14px; color:var(--ink-faint); font-size:13px; max-width:260px;">AI-сервис каталожной съёмки для премиум-сегмента и e-commerce.</p>
       </div>
       <div class="col">
@@ -977,7 +969,7 @@ a.tile { color: inherit; text-decoration: none; display: block; }
       </div>
     </div>
     <div class="bar">
-      <span>© 2026 fashion ai · все права защищены</span>
+      <span>© 2026 c3m · все права защищены</span>
       <div class="links">
         <a href="privacy.html">Политика конфиденциальности</a>
         <span>made with neural networks · moscow</span>
@@ -1053,7 +1045,7 @@ window.TRANSFORMS = [
   if (cat.external) { window.location.replace(cat.external); return; }
 
   // Update title & meta
-  document.title = `FASHION AI · ${cat.title}`;
+  document.title = `C3M · ${cat.title}`;
   document.getElementById("crumb-current").textContent = cat.title;
   document.getElementById("cat-kicker").textContent = String(idx+1).padStart(2,"0") + " — " + cat.title;
   document.getElementById("cat-title").innerHTML = cat.title.replace(/\s/, "<br/>");

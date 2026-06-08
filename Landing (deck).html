@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>FASHION AI — каталожные снимки на модели</title>
+<title>C3M — каталожные снимки на модели</title>
 
 <script>
 // Suppress benign cross-origin "Script error." and ResizeObserver warnings
@@ -88,20 +88,11 @@ deck-stage { background: #000; }
   z-index: 10;
 }
 .logo {
-  font-family: var(--head-font);
+  display: inline-flex;
+  align-items: center;
   color: var(--accent);
-  font-weight: 500;
-  letter-spacing: .32em;
-  font-size: 18px;
 }
-.logo .dot {
-  display: inline-block;
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  margin: 0 .55em;
-  transform: translateY(-3px);
-}
+.logo img { display: block; height: 32px; width: auto; }
 .crumb {
   font-family: var(--mono);
   font-size: 12px;
@@ -668,7 +659,7 @@ deck-stage { background: #000; }
     <img src="https://picsum.photos/seed/fashion-hero-lifestyle/1920/1080" alt="" />
   </div>
   <div class="chrome-top">
-    <a href="#" class="logo">FASHION<span class="dot"></span>AI</a>
+    <a href="#" class="logo"><img src="assets/logo/c3m.svg" alt="C3M"/></a>
     <div class="crumb">01 / 11 &nbsp;·&nbsp; <b>hero</b></div>
   </div>
   <div class="tag-left">— ai-каталог из одного фото —</div>
@@ -686,7 +677,7 @@ deck-stage { background: #000; }
 <!-- ═════════ 02 — КТО МЫ? ═════════ -->
 <section class="slide about" data-screen-label="02 About">
   <div class="chrome-top">
-    <a href="#" class="logo">FASHION<span class="dot"></span>AI</a>
+    <a href="#" class="logo"><img src="assets/logo/c3m.svg" alt="C3M"/></a>
     <div class="crumb">02 / 11 &nbsp;·&nbsp; <b>кто мы?</b></div>
   </div>
   <div>
@@ -694,7 +685,7 @@ deck-stage { background: #000; }
     <h2><span>Кто</span><span>мы?</span></h2>
   </div>
   <div class="text">
-    <p>FASHION AI — нейросетевой сервис, превращающий обычные фотографии вещей со склада в каталожные снимки на модели.</p>
+    <p>C3M — нейросетевой сервис, превращающий обычные фотографии вещей со склада в каталожные снимки на модели.</p>
     <p>Без студий, реквизита и многочасовых смен. Загрузите фото товара — получите серию профессиональных кадров в любом сеттинге: студия, проходка, имиджевая съёмка или промо-ролик.</p>
     <p>Мы работаем с премиум-сегментом, e-commerce и брендами, для которых скорость и единообразие визуала — приоритет.</p>
   </div>
@@ -708,7 +699,7 @@ deck-stage { background: #000; }
 <!-- ═════════ 03 — ДО → ПОСЛЕ ═════════ -->
 <section class="slide transforms" data-screen-label="03 Before / After">
   <div class="chrome-top">
-    <a href="#" class="logo">FASHION<span class="dot"></span>AI</a>
+    <a href="#" class="logo"><img src="assets/logo/c3m.svg" alt="C3M"/></a>
     <div class="crumb">03 / 11 &nbsp;·&nbsp; <b>до → после</b></div>
   </div>
   <div class="head">
@@ -726,7 +717,7 @@ deck-stage { background: #000; }
 <!-- ═════════ 04 — КАТЕГОРИИ ═════════ -->
 <section class="slide cats" data-screen-label="04 Categories">
   <div class="chrome-top">
-    <a href="#" class="logo">FASHION<span class="dot"></span>AI</a>
+    <a href="#" class="logo"><img src="assets/logo/c3m.svg" alt="C3M"/></a>
     <div class="crumb">04 / 11 &nbsp;·&nbsp; <b>категории</b></div>
   </div>
   <div class="head">
@@ -747,7 +738,7 @@ deck-stage { background: #000; }
 <!-- ═════════ 11 — CTA / FOOTER ═════════ -->
 <section class="slide cta" data-screen-label="11 Contact">
   <div class="chrome-top">
-    <a href="#" class="logo">FASHION<span class="dot"></span>AI</a>
+    <a href="#" class="logo"><img src="assets/logo/c3m.svg" alt="C3M"/></a>
     <div class="crumb">11 / 11 &nbsp;·&nbsp; <b>контакты</b></div>
   </div>
   <div class="top">
@@ -782,7 +773,7 @@ deck-stage { background: #000; }
     </div>
   </div>
   <div class="footer-bar">
-    <span>© 2026 fashion ai</span>
+    <span>© 2026 c3m</span>
     <span>Made with neural networks · Moscow</span>
   </div>
 </section>
@@ -872,7 +863,7 @@ const CATEGORIES = [
 
     slide.innerHTML = `
       <div class="chrome-top">
-        <a href="#" class="logo">FASHION<span class="dot"></span>AI</a>
+        <a href="#" class="logo"><img src="assets/logo/c3m.svg" alt="C3M"/></a>
         <div class="crumb">${String(slideIdx).padStart(2,"0")} / 11 &nbsp;·&nbsp; <b>${c.title.toLowerCase()}</b></div>
       </div>
       <div class="gbar">
