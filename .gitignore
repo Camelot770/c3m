@@ -4,6 +4,6 @@ node_modules/
 .claude/
 *.zip
 content/
-IMG_3068.MP4
+IMG_*.MP4
 .source-photos/
 *.pdf
