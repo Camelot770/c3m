@@ -40,7 +40,7 @@ window.CATEGORIES = [
     id: "promo",
     title: "Промо-ролики",
     desc: "30-секундные ролики с монтажом, музыкой и нарративом для соцсетей.",
-    count: 6,
+    count: 4,
     kind: "video",
   },
 ];
