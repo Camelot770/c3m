@@ -4,7 +4,7 @@ AI-агентство визуального контента. Статичес�
 
 ## Ссылки
 
-- **GitHub**: https://github.com/Camelot770/vadim_fashion
+- **GitHub**: https://github.com/Camelot770/c3m
 - **Production**: https://vadim-fashion.vercel.app
 - **Branch alias (всегда последний main)**: https://vadim-fashion-git-main-naums-projects-5189a309.vercel.app
 
